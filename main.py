@@ -1,3 +1,5 @@
+import time
+
 teste = open("teste.txt")
 f = open("numbers.txt")
 T = teste.readline().strip("T= ").strip()
@@ -13,7 +15,7 @@ def bubbleSort(v, N):
                 f = 1
         if f == 0:
             break
-    return v
+
 # ------------------------
 
 def countSort(v, N, Max):
@@ -28,7 +30,6 @@ def countSort(v, N, Max):
         count[int(v[i])] -= 1
     for i in range(N):
         v[i] = sorted_v[i]
-    return v
 
 # ------------------------
 
@@ -53,7 +54,6 @@ def radixSort(v, Max):
     while Max < digit:
         countSort_Radix(v, N, Max, digit)
         digit *= 10
-    return v
 
 # ------------------------
 
@@ -81,7 +81,6 @@ def mergeSort(v):
             v[k] = dr[j]
             j += 1
             k += 1
-    return v
 
 # ------------------------
 
@@ -107,7 +106,7 @@ def quickSort(v, i, j):
 
 # ------------------------
 
-for test in range(ord(T)-48):
+for test in range(int(T)):
     sir = teste.readline()
     i1 = 0
     OK = 0
@@ -147,9 +146,27 @@ for test in range(ord(T)-48):
 
     v = f.readline().split()
 
-    print(bubbleSort(v, int(N)))
-    print(countSort(v, int(N), int(Max)))
-    print(radixSort(v, int(Max)))
-    print(mergeSort(v))
+    start = time.time()
+    bubbleSort(v, int(N))
+    stop = time.time()
+    print("Bubble sort time: ", stop - start)
+
+    start = time.time()
+    countSort(v, int(N), int(Max))
+    stop = time.time()
+    print("Count sort time: ", stop - start)
+
+    start = time.time()
+    radixSort(v, int(Max))
+    stop = time.time()
+    print("Radix sort time: ", stop - start)
+
+    start = time.time()
+    mergeSort(v)
+    stop = time.time()
+    print("Merge sort time: ", stop - start)
+
+    start = time.time()
     quickSort(v, 0, int(N) - 1)
-    print(v)
+    stop = time.time()
+    print("Quick sort time: ", stop - start, "\n")

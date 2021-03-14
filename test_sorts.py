@@ -1,24 +1,55 @@
-f=open("teste.txt")
+f = open("numbers.txt")
 
 
-def countSort(v, N, Max):
-    sorted_v = [0 for i in range(N)]
-    count = [0 for i in range(Max+1)]
-    for i in v:
-        count[int(i)] += 1
-    for i in range(1,Max+1):
-        count[i] += count[i-1]
-    for i in range(N):
-        sorted_v[count[int(v[i])]-1] = v[i]
-        count[int(v[i])] -= 1
-    for i in range(N):
-        v[i] = sorted_v[i]
-    return v
-
+def mergeSort(arr):
+    if len(arr) > 1:
+        mid = len(arr) // 2
+        L = arr[:mid]
+        R = arr[mid:]
+        mergeSort(L)
+        mergeSort(R)
+        i = j = k = 0
+        while i < len(L) and j < len(R):
+            if int(L[i]) < int(R[j]):
+                arr[k] = L[i]
+                i += 1
+            else:
+                arr[k] = R[j]
+                j += 1
+            k += 1
+        while i < len(L):
+            arr[k] = L[i]
+            i += 1
+            k += 1
+        while j < len(R):
+            arr[k] = R[j]
+            j += 1
+            k += 1
+    return arr
 
 v = f.readline().split()
-print(v)
+print(mergeSort(v))
 
-countSort(v, len(v), 99)
-print("Vectorul printat: ",v)
-
+m = len(v) // 2
+    st = v[:m]
+    dr = v[m:]
+    mergeSort(st)
+    mergeSort(dr)
+    i = j = k = 0
+    while i < len(st) and j < len(dr):
+        if int(st[i]) <= int(dr[j]):
+            v[k] = st[i]
+            i += 1
+        else:
+            v[k] = dr[j]
+            j += 1
+        k += 1
+    while i < len(st):
+        v[k] = st[i]
+        i += 1
+        k += 1
+    while j < len(dr):
+        v[k] = dr[j]
+        j += 1
+        k += 1
+    return v
